@@ -1,8 +1,6 @@
-#include<Windows.h>
-#include <gl/gl.h>
 #include <gl/glut.h>
-#include "Vector3.h"
 #include "GlutWindow.h"
+#include "Vector3.h"
 #include "Camera.h"
 #include "Object.h"
 
