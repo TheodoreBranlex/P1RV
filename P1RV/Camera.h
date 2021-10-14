@@ -8,12 +8,10 @@ struct Camera
 	Vector3 up;
 	double fov;
 	double znear, zfar;
+	Vector3 backgroungColor;
 
-	Camera(Vector3, double);
-	Camera(Vector3, Vector3, double);
-	Camera(Vector3, Vector3, Vector3, double);
-	Camera(Vector3, Vector3, Vector3, double, double, double);
+	Camera(double, double, double);
 
-	void Use();
+	void Setup();
 };
 

@@ -9,9 +9,6 @@ struct Vector3
 	Vector3(double, double, double);
 	Vector3(const Vector3&);
 
-	static Vector3 up;
-	static Vector3 right;
-	static Vector3 forward;
 
 	Vector3& operator= (const Vector3&);
 
