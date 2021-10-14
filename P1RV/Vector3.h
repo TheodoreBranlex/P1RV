@@ -29,6 +29,6 @@ struct Vector3
 	Vector3 operator* (const Vector3&) const;
 	Vector3& operator*= (const Vector3&);
 
-	double length() const;
+	double Length() const;
 	Vector3& normalize();
 };

@@ -18,6 +18,7 @@ struct Object
 	vector<Vertex> vertices;
 	vector<vector<int>> faces;
 	Vector3 position;
+	Vector3 rotation;
 
 	Object(vector<Vertex>, vector<vector<int>>);
 

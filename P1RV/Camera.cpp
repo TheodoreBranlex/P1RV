@@ -24,9 +24,7 @@ void Camera::Setup()
 	Vector3 target = position + direction;
 	gluLookAt(position.x, position.y, position.z, target.x, target.y, target.z, up.x, up.y, up.z);
 
-	int width = glutGet(GLUT_INIT_WINDOW_WIDTH);
-	int height = glutGet(GLUT_INIT_WINDOW_HEIGHT);
-	double ratio = (double) width / height;
+	double ratio = (double) glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

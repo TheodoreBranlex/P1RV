@@ -97,13 +97,13 @@ Vector3& Vector3::operator*=(const Vector3& v)
     return *this;
 }
 
-double Vector3::length() const
+double Vector3::Length() const
 {
     return sqrt(x * x + y * y + z * z);
 }
 
 Vector3& Vector3::normalize()
 {
-    *this /= length();
+    *this /= Length();
     return *this;
 }

@@ -31,7 +31,8 @@ void Init()
 {
     camera.position.z = 10;
     camera.backgroungColor = Vector3(0, 0, 0.3);
-    cube.position = Vector3(1, 1, 0);
+    cube.position = Vector3(3, 3, 0);
+    cube.rotation = Vector3(0, 45, 0);
 }
 
 void Display() {
@@ -46,7 +47,7 @@ int main(int argc, char* argv[])
     GlutWindow window("P1RV", 1000, 1000);
     
     glutDisplayFunc(Display);
-    glutReshapeFunc(window.GetReshape());
+    glutReshapeFunc(window.reshapeFunc);
 
     Init();
     glutMainLoop();

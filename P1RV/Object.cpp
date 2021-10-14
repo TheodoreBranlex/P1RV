@@ -14,6 +14,7 @@ void Object::Render() {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glTranslated(position.x, position.y, position.z);
+    glRotated(rotation.Length(), rotation.x, rotation.y, rotation.z);
     for (vector<int> face : faces) {
         glBegin(GL_POLYGON);
         for (int i : face) {

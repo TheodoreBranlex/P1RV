@@ -14,11 +14,5 @@ GlutWindow::GlutWindow(const char* title, int width, int height, int xPosition, 
     glutInitWindowPosition(xPosition, yPosition);
     glutInitWindowSize(width, height);
     glutCreateWindow(title);
-}
-
-
-void (*GlutWindow::GetReshape())(int width, int height)
-{
-    auto Reshape = [](int width, int height) { glViewport(0, 0, width, height); };
-    return Reshape;
+    reshapeFunc = [](int width, int height) { glViewport(0, 0, width, height); };
 }
