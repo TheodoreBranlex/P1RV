@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GlutWindow.cpp" />
     <ClCompile Include="P1RV.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="GlutWindow.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
