@@ -7,8 +7,7 @@
 
 Camera camera(65, 0.1, 100);
 
-Object cube(
-{
+Object cube({
     {-1, -1, 1},
     {-1, 1, 1},
     {1, 1, 1},
@@ -17,8 +16,7 @@ Object cube(
     {-1, 1, -1},
     {1, 1, -1},
     {1, -1, -1},
-},
-{
+},{
     {0,1,2,3},
     {3,2,6,7},
     {4,5,6,7},
@@ -41,13 +39,19 @@ void Display() {
     glFlush();
 }
 
+void Update() {
+    cube.position.y -= 0.00001;
+    glutPostRedisplay();
+}
+
 int main(int argc, char* argv[])
 {
     glutInit(&argc, argv);
     GlutWindow window("P1RV", 1000, 1000);
     
-    glutDisplayFunc(Display);
     glutReshapeFunc(window.reshapeFunc);
+    glutDisplayFunc(Display);
+    glutIdleFunc(Update);
 
     Init();
     glutMainLoop();

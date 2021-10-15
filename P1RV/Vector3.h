@@ -29,6 +29,9 @@ struct Vector3
 	Vector3 operator* (const Vector3&) const;
 	Vector3& operator*= (const Vector3&);
 
+	// Dot product
+	double Dot(const Vector3&) const;
+
 	double Length() const;
 	Vector3& normalize();
 };
