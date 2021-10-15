@@ -47,9 +47,9 @@ void Update() {
 int main(int argc, char* argv[])
 {
     glutInit(&argc, argv);
-    GlutWindow window("P1RV", 1000, 1000);
+    GlutWindow::Create("P1RV", 1000, 1000);
     
-    glutReshapeFunc(window.reshapeFunc);
+    glutReshapeFunc(GlutWindow::Reshape);
     glutDisplayFunc(Display);
     glutIdleFunc(Update);
 

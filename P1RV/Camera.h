@@ -14,4 +14,3 @@ struct Camera
 
 	void Setup();
 };
-

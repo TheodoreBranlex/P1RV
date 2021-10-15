@@ -1,10 +1,8 @@
 #pragma once
-struct GlutWindow
+namespace GlutWindow
 {
-	void (*reshapeFunc)(int, int);
+	void Create(const char*, int, int);
+	void Create(const char*, int, int, int, int);
 
-	GlutWindow(int, int);
-	GlutWindow(const char*, int, int);
-	GlutWindow(int, int, int, int);
-	GlutWindow(const char*, int, int, int, int);
+	void Reshape(int, int);
 };
