@@ -1,13 +1,16 @@
-#include "Object.h"
 #include <gl/glut.h>
+#include "Object.h"
 
 
-Vertex::Vertex(double x, double y, double z) : position(x, y, z), color(1, 1, 1) {}
-
-Vertex::Vertex(double x, double y, double z, double r, double g, double b) : position(x, y, z), color(r, g, b) {}
+vector<Object*> Object::all;
 
 
-Object::Object(vector<Vertex> vertexList, vector<vector<int>> faceList) : vertices(vertexList), faces(faceList) {};
+Object::Object(vector<Vector> vertexList, vector<vector<int>> faceList) : Object(vertexList, faceList, Vector(1, 1, 1)) {}
+
+Object::Object(vector<Vector> vertexList, vector<vector<int>> faceList, Vector objectColor) : vertices(vertexList), faces(faceList), color(objectColor)
+{
+    Object::all.push_back(this);
+}
 
 
 void Object::Render() {
@@ -18,10 +21,8 @@ void Object::Render() {
     for (vector<int> face : faces) {
         glBegin(GL_POLYGON);
         for (int i : face) {
-            Vector3 color(vertices[i].color);
             glColor3f(color.x, color.y, color.z);
-            Vector3 position(vertices[i].position);
-            glVertex3f(position.x, position.y, position.z);
+            glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
         }
         glEnd();
     }

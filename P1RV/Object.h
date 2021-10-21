@@ -1,26 +1,21 @@
 #pragma once
 #pragma once
-#include "Vector3.h"
+#include "Vector.h"
 #include <vector>
 using namespace std;
 
-struct Vertex
-{
-	Vector3 position;
-	Vector3 color;
-
-	Vertex(double, double, double);
-	Vertex(double, double, double, double, double, double);
-};
-
 struct Object
 {
-	vector<Vertex> vertices;
-	vector<vector<int>> faces;
-	Vector3 position;
-	Vector3 rotation;
+	static vector<Object*> all;
 
-	Object(vector<Vertex>, vector<vector<int>>);
+	vector<Vector> vertices;
+	vector<vector<int>> faces;
+	Vector color;
+	Vector position;
+	Vector rotation;
+
+	Object(vector<Vector>, vector<vector<int>>);
+	Object(vector<Vector>, vector<vector<int>>, Vector);
 
 	void Render();
 };

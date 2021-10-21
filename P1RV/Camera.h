@@ -1,14 +1,16 @@
 #pragma once
-#include "Vector3.h"
-#include "GlutWindow.h"
+#include "Vector.h"
+
 struct Camera
 {
-	Vector3 position;
-	Vector3 direction;
-	Vector3 up;
+	static Camera * main;
+
+	Vector position;
+	Vector direction;
+	Vector up;
 	double fov;
 	double znear, zfar;
-	Vector3 backgroungColor;
+	Vector backgroungColor;
 
 	Camera(double, double, double);
 
