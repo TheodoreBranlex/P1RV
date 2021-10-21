@@ -14,6 +14,7 @@ struct Object
 	Vector position;
 	Vector rotation;
 
+	Object();
 	Object(vector<Vector>, vector<vector<int>>);
 	Object(vector<Vector>, vector<vector<int>>, Vector);
 

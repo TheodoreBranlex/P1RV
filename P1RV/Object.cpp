@@ -5,6 +5,8 @@
 vector<Object*> Object::all;
 
 
+Object::Object() {}
+
 Object::Object(vector<Vector> vertexList, vector<vector<int>> faceList) : Object(vertexList, faceList, Vector(1, 1, 1)) {}
 
 Object::Object(vector<Vector> vertexList, vector<vector<int>> faceList, Vector objectColor) : vertices(vertexList), faces(faceList), color(objectColor)

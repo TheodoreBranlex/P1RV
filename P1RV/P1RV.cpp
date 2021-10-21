@@ -47,7 +47,8 @@ void Init()
 
 void Update(int ms) {
     double dt = (double) ms / 1000;
-    cube.position.y -= 10 * dt;
+    if (cube.position.y > 1)
+        cube.position.y -= 20 * dt;
     glutPostRedisplay();
     glutTimerFunc(ms, Update, ms);
 }
@@ -56,6 +57,6 @@ void Update(int ms) {
 int main(int argc, char* argv[])
 {
     glutInit(&argc, argv);
-    Display::CreateWindow("P1RV", 1000, 1000);
+    Display::CreateWindow("P1RV", 800, 800);
     Display::BeginDisplay(Init, Update, 60);
 }
