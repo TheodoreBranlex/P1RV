@@ -3,6 +3,7 @@
 #include "Vector.h"
 #include "Camera.h"
 #include "Object.h"
+#include "Input.h"
 
 
 Camera camera(65, 0.1, 100);
@@ -35,7 +36,7 @@ Object plane({
     {{0,1,2,3}});
 
 
-void Init()
+void Initialize()
 {
     camera.position = Vector(0, 5, 10);
     camera.direction.z = -0.5;
@@ -49,6 +50,9 @@ void Update(int ms) {
     double dt = (double) ms / 1000;
     if (cube.position.y > 1)
         cube.position.y -= 20 * dt;
+    else
+        cube.position.y = 1;
+    cube.position += 10 * Input::move * dt;
     glutPostRedisplay();
     glutTimerFunc(ms, Update, ms);
 }
@@ -58,5 +62,6 @@ int main(int argc, char* argv[])
 {
     glutInit(&argc, argv);
     Display::CreateWindow("P1RV", 800, 800);
-    Display::BeginDisplay(Init, Update, 60);
+    Input::BeginInput();
+    Display::BeginDisplay(Initialize, Update, 120);
 }

@@ -1,7 +1,7 @@
 #pragma once
-#pragma once
 #include "Vector.h"
 #include <vector>
+
 using namespace std;
 
 struct Object

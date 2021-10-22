@@ -22,7 +22,7 @@ void Display::BeginDisplay(void (*UpdateScene) (int), int fps)
     BeginDisplay([]() {}, UpdateScene, fps);
 }
 
-void Display::BeginDisplay(void (*InitScene) (), void (*UpdateScene) (int), int fps)
+void Display::BeginDisplay(void (*InitializeScene) (), void (*UpdateScene) (int), int fps)
 {
     glutDisplayFunc(RenderScene);
     glutReshapeFunc([](int width, int height) { glViewport(0, 0, width, height); });
@@ -30,7 +30,7 @@ void Display::BeginDisplay(void (*InitScene) (), void (*UpdateScene) (int), int 
     int ms = 1000 / fps;
     glutTimerFunc(ms, UpdateScene, ms);
 
-    InitScene();
+    InitializeScene();
     glutMainLoop();
 }
 
