@@ -109,6 +109,7 @@ double Vector::Length() const
 
 Vector& Vector::Normalize()
 {
-    *this /= Length();
+    if (Length() != 0)
+        *this /= Length();
     return *this;
 }

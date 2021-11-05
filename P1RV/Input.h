@@ -7,6 +7,7 @@ namespace Input
 	extern Vector camera;
 	extern bool roll;
 	extern bool attack;
+	extern bool target;
 
 	void BeginInput();
 };
