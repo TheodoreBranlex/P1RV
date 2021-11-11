@@ -1,9 +1,11 @@
 #pragma once
 #include "Vector.h"
 
-struct Button
+class Button
 {
 	bool press = false;
+public:
+	void Set(bool state) { press = state; }
 	operator bool() { if (press) { press = false; return true; } else return false; }
 };
 

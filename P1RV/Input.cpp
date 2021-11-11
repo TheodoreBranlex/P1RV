@@ -46,21 +46,21 @@ void MousePress(int button, int state, int x, int y)
 	{
 	case GLUT_LEFT_BUTTON:
 		if (state == GLUT_DOWN)
-			roll.press = true;
+			roll.Set(true);
 		if (state == GLUT_UP)
-			roll.press = false;
+			roll.Set(false);
 		break;
 	case GLUT_RIGHT_BUTTON:
 		if (state == GLUT_DOWN)
-			attack.press = true;
+			attack.Set(true);
 		if (state == GLUT_UP)
-			attack.press = false;
+			attack.Set(false);
 		break;
 	case GLUT_MIDDLE_BUTTON:
 		if (state == GLUT_DOWN)
-			target.press = true;
+			target.Set(true);
 		if (state == GLUT_UP)
-			target.press = false;
+			target.Set(false);
 		break;
 	}
 }
