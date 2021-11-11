@@ -1,32 +1,26 @@
 #include <gl/glut.h>
 #include "Input.h"
+#include "Display.h"
 
 using namespace Input;
 
 
-Vector Input::move;
-Vector Input::camera;
-bool Input::roll = false;
-bool Input::attack = false;
-bool Input::target = false;
-
-bool left, right, up, down;
-
+struct { bool left, right, up, down; } keypad;
 
 void KeyDown(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
 	case 'q':
-		left = true; break;
+		keypad.left = true; break;
 	case 'd':
-		right = true; break;
+		keypad.right = true; break;
 	case 'z':
-		up = true; break;
+		keypad.up = true; break;
 	case 's':
-		down = true; break;
+		keypad.down = true; break;
 	}
-	move = Vector(right - left, 0, down - up).Normalize();
+	move = Vector(keypad.right - keypad.left, 0, keypad.up - keypad.down).Normalize();
 }
 
 void KeyUp(unsigned char key, int x, int y)
@@ -34,15 +28,15 @@ void KeyUp(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'q':
-		left = false; break;
+		keypad.left = false; break;
 	case 'd':
-		right = false; break;
+		keypad.right = false; break;
 	case 'z':
-		up = false; break;
+		keypad.up = false; break;
 	case 's':
-		down = false; break;
+		keypad.down = false; break;
 	}
-	move = Vector(right - left, 0, down - up).Normalize();
+	move = Vector(keypad.right - keypad.left, 0, keypad.up - keypad.down).Normalize();
 }
 
 
@@ -52,28 +46,31 @@ void MousePress(int button, int state, int x, int y)
 	{
 	case GLUT_LEFT_BUTTON:
 		if (state == GLUT_DOWN)
-			roll = true;
+			roll.press = true;
 		if (state == GLUT_UP)
-			roll = false;
+			roll.press = false;
 		break;
 	case GLUT_RIGHT_BUTTON:
 		if (state == GLUT_DOWN)
-			attack = true;
+			attack.press = true;
 		if (state == GLUT_UP)
-			attack = false;
+			attack.press = false;
 		break;
 	case GLUT_MIDDLE_BUTTON:
 		if (state == GLUT_DOWN)
-			target = true;
+			target.press = true;
 		if (state == GLUT_UP)
-			target = false;
+			target.press = false;
 		break;
 	}
 }
 
-void MouseMove(int x, int y)
-{
 
+void MouseMove(int dx, int dy)
+{
+	int cx = glutGet(GLUT_WINDOW_WIDTH) / 2, cy = glutGet(GLUT_WINDOW_HEIGHT) / 2;
+	camera = mouseSensitivity / Display::fps * Vector(dx - cx, cy - dy, 0);
+	glutWarpPointer(cx, cy);
 }
 
 
@@ -84,4 +81,6 @@ void Input::BeginInput()
 	glutMouseFunc(MousePress);
 	glutMotionFunc(MouseMove);
 	glutPassiveMotionFunc(MouseMove);
+
+	glutSetCursor(GLUT_CURSOR_NONE);
 }

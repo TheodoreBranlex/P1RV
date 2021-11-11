@@ -17,17 +17,17 @@ void Display::CreateWindow(const char* title, int width, int height, int xPositi
     glutCreateWindow(title);
 }
 
-void Display::BeginDisplay(void (*UpdateScene) (int), int fps)
+void Display::BeginDisplay(void (*UpdateScene) (int))
 {
-    BeginDisplay([]() {}, UpdateScene, fps);
+    BeginDisplay([]() {}, UpdateScene);
 }
 
-void Display::BeginDisplay(void (*InitializeScene) (), void (*UpdateScene) (int), int fps)
+void Display::BeginDisplay(void (*InitializeScene) (), void (*UpdateScene) (int))
 {
     glutDisplayFunc(RenderScene);
     glutReshapeFunc([](int width, int height) { glViewport(0, 0, width, height); });
 
-    int ms = 1000 / fps;
+    int ms = 1000 / Display::fps;
     glutTimerFunc(ms, UpdateScene, ms);
 
     InitializeScene();

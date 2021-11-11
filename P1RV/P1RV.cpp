@@ -46,13 +46,26 @@ void Initialize()
     cube.rotation = Vector(0, 45, 0);
 }
 
+
+Vector up(0, 1, 0);
+double cameraDistance = 10;
+
 void Update(int ms) {
     double dt = (double) ms / 1000;
+
+    Vector right = (camera.direction * up).Normalize();
+    Vector forward = (up * right).Normalize();
+
     if (cube.position.y > 1)
         cube.position.y -= 20 * dt;
     else
         cube.position.y = 1;
-    cube.position += 10 * Input::move * dt;
+    cube.position += 10 * (Input::move.x * right + Input::move.z * forward) * dt;
+
+    camera.direction += Input::camera.x * right + Input::camera.y * up;
+    camera.direction.Normalize();
+    camera.position = cube.position - cameraDistance * camera.direction;
+
     glutPostRedisplay();
     glutTimerFunc(ms, Update, ms);
 }
@@ -63,5 +76,5 @@ int main(int argc, char* argv[])
     glutInit(&argc, argv);
     Display::CreateWindow("P1RV", 800, 800);
     Input::BeginInput();
-    Display::BeginDisplay(Initialize, Update, 120);
+    Display::BeginDisplay(Initialize, Update);
 }
