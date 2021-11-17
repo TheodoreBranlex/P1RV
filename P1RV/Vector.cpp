@@ -1,8 +1,8 @@
+#define _USE_MATH_DEFINES
+
 #include "Vector.h"
 #include <cmath>
 
-
-Vector::Vector() : Vector(0, 0, 0) {}
 
 Vector::Vector(double X, double Y, double Z) : x(X), y(Y), z(Z) {}
 

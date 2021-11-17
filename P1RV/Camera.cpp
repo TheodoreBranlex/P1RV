@@ -5,7 +5,7 @@
 Camera * Camera::main = nullptr;
 
 
-Camera::Camera(double fieldOfView, double nearestDistance, double farthestDistance)
+Camera::Camera(double fieldOfView, double nearestDistance, double farthestDistance, Vector backgroungColor)
 {
 	position = Vector();
 	direction = Vector(0, 0, -1);
@@ -13,7 +13,7 @@ Camera::Camera(double fieldOfView, double nearestDistance, double farthestDistan
 	fov = fieldOfView;
 	znear = nearestDistance;
 	zfar = farthestDistance;
-	backgroungColor = Vector();
+	color = backgroungColor;
 
 	if (!Camera::main)
 		Camera::main = this;
@@ -23,7 +23,7 @@ Camera::Camera(double fieldOfView, double nearestDistance, double farthestDistan
 void Camera::Setup()
 {
 	glEnable(GL_DEPTH_TEST);
-	glClearColor(backgroungColor.x, backgroungColor.y, backgroungColor.z, 1);
+	glClearColor(color.x, color.y, color.z, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -31,7 +31,7 @@ void Camera::Setup()
 	Vector target = position + direction;
 	gluLookAt(position.x, position.y, position.z, target.x, target.y, target.z, up.x, up.y, up.z);
 
-	double ratio = (double) glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT);
+	double ratio = (double)glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

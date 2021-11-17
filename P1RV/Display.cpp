@@ -4,11 +4,6 @@
 #include "Object.h"
 
 
-void Display::CreateWindow(const char* title, int width, int height)
-{
-    CreateWindow(title, width, height, 0, 0);
-}
-
 void Display::CreateWindow(const char* title, int width, int height, int xPosition, int yPosition)
 {
     glutInitDisplayMode(GLUT_RGB);

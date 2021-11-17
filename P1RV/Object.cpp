@@ -5,12 +5,14 @@
 vector<Object*> Object::all;
 
 
-Object::Object() {}
-
-Object::Object(vector<Vector> vertexList, vector<vector<int>> faceList) : Object(vertexList, faceList, Vector(1, 1, 1)) {}
-
-Object::Object(vector<Vector> vertexList, vector<vector<int>> faceList, Vector objectColor) : vertices(vertexList), faces(faceList), color(objectColor)
+Object::Object(vector<Vector> vertexList, vector<vector<int>> faceList, Vector objectColor, Vector initialPosition, Vector forwardDirection, Vector upDirection)
 {
+    vertices = vertexList;
+    faces = faceList;
+    color = objectColor;
+    position = initialPosition;
+    direction = forwardDirection;
+    up = upDirection;
     Object::all.push_back(this);
 }
 
@@ -19,7 +21,6 @@ void Object::Render() {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glTranslated(position.x, position.y, position.z);
-    glRotated(rotation.Length(), rotation.x, rotation.y, rotation.z);
     for (vector<int> face : faces) {
         glBegin(GL_POLYGON);
         for (int i : face) {

@@ -6,9 +6,10 @@
 #include "Input.h"
 
 
-Camera camera(65, 0.1, 100);
+Camera camera(65, 0.1, 100, {0, 0, 0.3});
 
-Object cube({
+Object player
+({
     {-1, -1, 1},
     {-1, 1, 1},
     {1, 1, 1},
@@ -25,46 +26,62 @@ Object cube({
     {1,5,6,2},
     {0,4,7,3}
 },
-    {1, 0, 0});
+    {1, 0, 0}
+);
 
-Object plane({
+Object plane
+({
     {-5, 0, -5},
     {-5, 0, 5},
     {5, 0, 5},
     {5, 0, -5},
 },
-    {{0,1,2,3}});
+    {{0,1,2,3}}
+);
+
+
+double cameraDistance = 10;
+
+double maxSpeed = 10;
+double rollSpeed = 20;
+double deceleration = 20;
 
 
 void Initialize()
 {
-    camera.position = Vector(0, 5, 10);
-    camera.direction.z = -0.5;
-    camera.backgroungColor = { 0, 0, 0.3 };
-
-    cube.position = Vector(0, 10, 0);
-    cube.rotation = Vector(0, 45, 0);
+    player.position = Vector(0, 10, 0);
 }
 
 
-Vector up(0, 1, 0);
-double cameraDistance = 10;
+double speed = maxSpeed;
+Vector velocity;
 
-void Update(int ms) {
+void Update(int ms)
+{
     double dt = (double) ms / 1000;
-
+    
+    Vector up = Vector(0, 1, 0);
     Vector right = (camera.direction * up).Normalize();
     Vector forward = (up * right).Normalize();
+    
+    if (Input::roll)
+        speed = rollSpeed;
+    if (speed > maxSpeed)
+        speed -= deceleration * dt;
 
-    if (cube.position.y > 1)
-        cube.position.y -= 20 * dt;
+    velocity = speed * (Input::move.x * right + Input::move.z * forward);
+
+    if (player.position.y > 1)
+        velocity.y = -20;
     else
-        cube.position.y = 1;
-    cube.position += 10 * (Input::move.x * right + Input::move.z * forward) * dt;
+        player.position.y = 1;
+
+    player.position += velocity * dt;
+
 
     camera.direction += Input::camera.x * right + Input::camera.y * up;
     camera.direction.Normalize();
-    camera.position = cube.position - cameraDistance * camera.direction;
+    camera.position = player.position - cameraDistance * camera.direction;
 
     glutPostRedisplay();
     glutTimerFunc(ms, Update, ms);

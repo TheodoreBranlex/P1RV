@@ -10,9 +10,9 @@ struct Camera
 	Vector up;
 	double fov;
 	double znear, zfar;
-	Vector backgroungColor;
+	Vector color;
 
-	Camera(double, double, double);
+	Camera(double, double, double, Vector = {0, 0, 0});
 
 	void Setup();
 };
