@@ -16,6 +16,7 @@ struct Vector
 
 	Vector& operator-= (const Vector&);
 	Vector operator- (const Vector&) const;
+	Vector operator- () const;
 
 	Vector& operator*= (const double);
 	Vector operator* (const double) const;

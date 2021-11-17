@@ -71,6 +71,9 @@ void Update(int ms)
 
     velocity = speed * (Input::move.x * right + Input::move.z * forward);
 
+    if (velocity.Length() != 0)
+        player.direction = velocity;
+
     if (player.position.y > 1)
         velocity.y = -20;
     else

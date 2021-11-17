@@ -15,7 +15,7 @@ struct Object
 	Vector direction;
 	Vector up;
 	
-	Object(vector<Vector>, vector<vector<int>>, Vector = {1, 1, 1}, Vector = Vector(), Vector = Vector(0, 0, -1),  Vector = Vector(0, 1, 0));
+	Object(vector<Vector>, vector<vector<int>>, Vector = {1, 1, 1});
 
 	void Render();
 };

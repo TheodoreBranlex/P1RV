@@ -47,6 +47,13 @@ Vector Vector::operator- (const Vector& v) const
     return r;
 }
 
+Vector Vector::operator- () const
+{
+    Vector r;
+    r -= *this;
+    return r;
+}
+
 Vector& Vector::operator*= (const double a)
 {
     x *= a;
