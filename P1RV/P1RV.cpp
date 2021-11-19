@@ -26,7 +26,7 @@ Object player
     {1,5,6,2},
     {0,4,7,3}
 },
-    {1, 0, 0}
+    {0.7, 0, 0.3}
 );
 
 Object plane
@@ -46,8 +46,8 @@ double cameraDistance = 10;
 double targetSpeed = 20;
 
 double maxSpeed = 10;
-double rollSpeed = 20;
-double deceleration = 20;
+double rollSpeed = 30;
+double deceleration = 40;
 
 
 void Initialize()
