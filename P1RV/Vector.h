@@ -9,27 +9,29 @@ struct Vector
 	Vector(const Vector&);
 	
 
-	Vector& operator= (const Vector&);
+	Vector& operator=(const Vector&);
 
-	Vector& operator+= (const Vector&);
-	Vector operator+ (const Vector&) const;
+	Vector& operator+=(const Vector&);
+	Vector operator+(const Vector&) const;
 
-	Vector& operator-= (const Vector&);
-	Vector operator- (const Vector&) const;
-	Vector operator- () const;
+	Vector& operator-=(const Vector&);
+	Vector operator-(const Vector&) const;
+	Vector operator-() const;
 
-	Vector& operator*= (const double);
-	Vector operator* (const double) const;
-	friend Vector operator* (const double, const Vector&);
+	Vector& operator*=(const double);
+	Vector operator*(const double) const;
+	friend Vector operator*(const double, const Vector&);
 
-	Vector& operator/= (const double);
-	Vector operator/ (const double)const;
+	Vector& operator/=(const double);
+	Vector operator/(const double)const;
 	
-	Vector operator* (const Vector&) const;
-	Vector& operator*= (const Vector&);
+	Vector operator*(const Vector&) const;
+	Vector& operator*=(const Vector&);
 	
 	double Dot(const Vector&) const;
 
 	double Length() const;
 	Vector& Normalize();
+
+	Vector& Damp(const Vector&, double, double);
 };

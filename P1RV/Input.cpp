@@ -52,12 +52,6 @@ void MousePress(int button, int state, int x, int y)
 		break;
 	case GLUT_RIGHT_BUTTON:
 		if (state == GLUT_DOWN)
-			attack.Set(true);
-		if (state == GLUT_UP)
-			attack.Set(false);
-		break;
-	case GLUT_MIDDLE_BUTTON:
-		if (state == GLUT_DOWN)
 			target.Set(true);
 		if (state == GLUT_UP)
 			target.Set(false);

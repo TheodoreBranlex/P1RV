@@ -9,7 +9,7 @@ Vector::Vector(double X, double Y, double Z) : x(X), y(Y), z(Z) {}
 Vector::Vector(const Vector& v) : Vector(v.x, v.y, v.z) {}
 
 
-Vector& Vector::operator= (const Vector& v)
+Vector& Vector::operator=(const Vector& v)
 {
     x = v.x;
     y = v.y;
@@ -17,7 +17,7 @@ Vector& Vector::operator= (const Vector& v)
     return *this;
 }
 
-Vector& Vector::operator+= (const Vector& v)
+Vector& Vector::operator+=(const Vector& v)
 {
     x += v.x;
     y += v.y;
@@ -25,14 +25,14 @@ Vector& Vector::operator+= (const Vector& v)
     return *this;
 }
 
-Vector Vector::operator+ (const Vector& v) const
+Vector Vector::operator+(const Vector& v) const
 {
     Vector r = *this;
     r += v;
     return r;
 }
 
-Vector& Vector::operator-= (const Vector& v)
+Vector& Vector::operator-=(const Vector& v)
 {
     x -= v.x;
     y -= v.y;
@@ -40,21 +40,21 @@ Vector& Vector::operator-= (const Vector& v)
     return *this;
 }
 
-Vector Vector::operator- (const Vector& v) const
+Vector Vector::operator-(const Vector& v) const
 {
     Vector r = *this;
     r -= v;
     return r;
 }
 
-Vector Vector::operator- () const
+Vector Vector::operator-() const
 {
     Vector r;
     r -= *this;
     return r;
 }
 
-Vector& Vector::operator*= (const double a)
+Vector& Vector::operator*=(const double a)
 {
     x *= a;
     y *= a;
@@ -62,19 +62,19 @@ Vector& Vector::operator*= (const double a)
     return *this;
 }
 
-Vector Vector::operator* (const double a) const
+Vector Vector::operator*(const double a) const
 {
     Vector r = *this;
     r *= a;
     return r;
 }
 
-Vector operator* (const double a, const Vector& v)
+Vector operator*(const double a, const Vector& v)
 {
     return Vector(v.x * a, v.y * a, v.z * a);
 }
 
-Vector& Vector::operator/= (const double a)
+Vector& Vector::operator/=(const double a)
 {
     x /= a;
     y /= a;
@@ -82,7 +82,7 @@ Vector& Vector::operator/= (const double a)
     return *this;
 }
 
-Vector Vector::operator/ (const double a) const
+Vector Vector::operator/(const double a) const
 {
     Vector r = *this;
     r /= a;
@@ -118,5 +118,12 @@ Vector& Vector::Normalize()
 {
     if (Length() != 0)
         *this /= Length();
+    return *this;
+}
+
+Vector& Vector::Damp(const Vector& v, double l, double dt)
+{
+    double s = exp(-l * dt);
+    *this = s * (*this) + (1 - s) * v;
     return *this;
 }

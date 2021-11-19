@@ -39,8 +39,11 @@ Object plane
     {{0,1,2,3}}
 );
 
+Vector target;
+
 
 double cameraDistance = 10;
+double targetSpeed = 20;
 
 double maxSpeed = 10;
 double rollSpeed = 20;
@@ -55,6 +58,7 @@ void Initialize()
 
 double speed = maxSpeed;
 Vector velocity;
+bool targetLock = false;
 
 void Update(int ms)
 {
@@ -80,13 +84,20 @@ void Update(int ms)
         player.position.y = 1;
 
     player.position += velocity * dt;
+    
+    if (Input::target)
+        targetLock = !targetLock;
 
-
-    camera.direction += Input::camera.x * right + Input::camera.y * up;
+    if (!targetLock)
+        camera.direction += Input::camera.x * right + Input::camera.y * up;
+    else
+        camera.direction.Damp((target - player.position).Normalize(), targetSpeed, dt);
     camera.direction.Normalize();
     camera.position = player.position - cameraDistance * camera.direction;
-
+    
     glutPostRedisplay();
+
+    ms = 1000 / Display::fps;
     glutTimerFunc(ms, Update, ms);
 }
 
