@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Object.h"
 #include "Input.h"
+#include <iostream>
 
 
 Camera camera(65, 0.1, 100, {0, 0, 0.3});
@@ -45,9 +46,14 @@ Vector target;
 double cameraDistance = 10;
 double targetSpeed = 20;
 
-double maxSpeed = 10;
+double gravity = 200;
+double runSpeed = 10;
 double rollSpeed = 30;
-double deceleration = 40;
+double deceleration = 30;
+
+double jumpThreshold = 0.7;
+Vector sideHop(0, 25, 40);
+Vector backFlip(0, 40, 30);
 
 
 void Initialize()
@@ -56,8 +62,7 @@ void Initialize()
 }
 
 
-double speed = maxSpeed;
-Vector velocity;
+Vector speed(0, 0, runSpeed);
 bool targetLock = false;
 
 void Update(int ms)
@@ -67,24 +72,36 @@ void Update(int ms)
     Vector up = Vector(0, 1, 0);
     Vector right = (camera.direction * up).Normalize();
     Vector forward = (up * right).Normalize();
-    
-    if (Input::roll)
-        speed = rollSpeed;
-    if (speed > maxSpeed)
-        speed -= deceleration * dt;
 
-    velocity = speed * (Input::move.x * right + Input::move.z * forward);
+    Vector move = Input::move.x * right + Input::move.z * forward;
 
-    if (velocity.Length() != 0)
-        player.direction = velocity;
+    if (move.Length() != 0)
+        player.direction = move;
 
     if (player.position.y > 1)
-        velocity.y = -20;
+        speed.y -= gravity * dt;
     else
+    {
         player.position.y = 1;
+        speed.y = 0;
+    }
+
+    if (Input::roll)
+        if (targetLock && Input::move.z < -jumpThreshold)
+            speed = backFlip;
+        else if (targetLock && abs(Input::move.x) > jumpThreshold)
+            speed = sideHop;
+        else
+            speed.z = rollSpeed;
+
+    if (speed.z > runSpeed)
+        speed.z -= deceleration * dt;
+
+    Vector velocity = speed.y * up + speed.z * move;
 
     player.position += velocity * dt;
     
+
     if (Input::target)
         targetLock = !targetLock;
 
@@ -95,6 +112,7 @@ void Update(int ms)
     camera.direction.Normalize();
     camera.position = player.position - cameraDistance * camera.direction;
     
+
     glutPostRedisplay();
 
     ms = 1000 / Display::fps;
