@@ -48,23 +48,13 @@ Object::Object(vector<Mesh> meshList) : meshes(meshList)
     up = Vector(0, 1, 0);
 }
 
-void readNode(aiNode* node, const aiScene* scene, Object* target)
-{
-    for (unsigned int i = 0; i < node->mNumMeshes; ++i)
-    {
-        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        target->meshes.push_back(readMesh(mesh, scene));
-    }
-    for (unsigned int i = 0; i < node->mNumChildren; ++i)
-        readNode(node->mChildren[i], scene, target);
-}
-
 Object::Object(string filename) : position(), direction(0, 0, -1), up(0, 1, 0)
 {
     string path = "Models/" + filename;
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
-    readNode(scene->mRootNode, scene, this);
+    for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
+        meshes.push_back(readMesh(scene->mMeshes[i], scene));
     Object::all.push_back(this);
 }
 
