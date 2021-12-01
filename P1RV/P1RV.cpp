@@ -4,41 +4,19 @@
 #include "Camera.h"
 #include "Object.h"
 #include "Input.h"
-#include <iostream>
-
 
 Camera camera(65, 0.1, 100, {0, 0, 0.3});
 
-Object player
-({
-    {-1, -1, 1},
-    {-1, 1, 1},
-    {1, 1, 1},
-    {1, -1, 1},
-    {-1, -1, -1},
-    {-1, 1, -1},
-    {1, 1, -1},
-    {1, -1, -1},
-},{
-    {0,1,2,3},
-    {3,2,6,7},
-    {4,5,6,7},
-    {0,1,5,4},
-    {1,5,6,2},
-    {0,4,7,3}
-},
-    {0.7, 0, 0.3}
-);
+Object player("Eevee/model.obj", 5);
 
-Object plane
-({
+Object plane({
     {-5, 0, -5},
     {-5, 0, 5},
     {5, 0, 5},
-    {5, 0, -5},
-},
-    {{0,1,2,3}}
-);
+    {5, 0, -5}
+},{
+    {0, 1, 2, 3}
+});
 
 Vector target;
 
@@ -68,15 +46,13 @@ bool targetLock = false;
 void Update(int ms)
 {
     double dt = (double) ms / 1000;
+
     
     Vector up = Vector(0, 1, 0);
     Vector right = (camera.direction * up).Normalize();
     Vector forward = (up * right).Normalize();
 
     Vector move = Input::move.x * right + Input::move.z * forward;
-
-    if (move.Length() != 0)
-        player.direction = move;
 
     if (player.position.y > 1)
         speed.y -= gravity * dt;
@@ -106,9 +82,17 @@ void Update(int ms)
         targetLock = !targetLock;
 
     if (!targetLock)
+    {
         camera.direction += Input::camera.x * right + Input::camera.y * up;
+        if (move.Length() != 0)
+            player.direction = move;
+    }
     else
-        camera.direction.Damp((target - player.position).Normalize(), targetSpeed, dt);
+    {
+        Vector targetDirection = (target - player.position).Normalize();
+        camera.direction.Damp(targetDirection, targetSpeed, dt);
+        player.direction = (targetDirection).Normalize();
+    }
     camera.direction.Normalize();
     camera.position = player.position - cameraDistance * camera.direction;
     

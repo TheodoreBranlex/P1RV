@@ -3,7 +3,7 @@
 
 struct Camera
 {
-	static Camera * main;
+	inline static Camera* main = 0;
 
 	Vector position;
 	Vector direction;

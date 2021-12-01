@@ -2,9 +2,6 @@
 #include "Camera.h"
 
 
-Camera * Camera::main = nullptr;
-
-
 Camera::Camera(double fieldOfView, double nearestDistance, double farthestDistance, Vector backgroungColor)
 {
 	position = Vector();
@@ -31,7 +28,7 @@ void Camera::Setup()
 	Vector target = position + direction;
 	gluLookAt(position.x, position.y, position.z, target.x, target.y, target.z, up.x, up.y, up.z);
 
-	double ratio = (double)glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT);
+	double ratio = (double) glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

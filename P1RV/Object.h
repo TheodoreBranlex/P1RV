@@ -1,21 +1,32 @@
 #pragma once
 #include "Vector.h"
 #include <vector>
+#include <string>
 
 using namespace std;
 
+struct Mesh
+{
+	vector<Vector> vertices;
+	vector<vector<unsigned int>> faces;
+
+	Mesh(vector<Vector>, vector<vector<unsigned int>>);
+
+	void Render();
+};
+
 struct Object
 {
-	static vector<Object*> all;
+	inline static vector<Object*> all;
 
-	vector<Vector> vertices;
-	vector<vector<int>> faces;
-	Vector color;
+	vector<Mesh> meshes;
+
 	Vector position;
 	Vector direction;
 	Vector up;
 	
-	Object(vector<Vector>, vector<vector<int>>, Vector = {1, 1, 1});
+	Object(vector<Mesh>);
+	Object(string filename);
 
 	void Render();
 };
