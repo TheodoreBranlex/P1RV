@@ -7,15 +7,17 @@
 
 Camera camera(65, 0.1, 100, {0, 0, 0.3});
 
-Object player("Eevee/model.obj", 5);
+Object player("Eevee/model.obj");
 
 Object plane({
+    Mesh({
     {-5, 0, -5},
     {-5, 0, 5},
     {5, 0, 5},
     {5, 0, -5}
 },{
     {0, 1, 2, 3}
+    })
 });
 
 Vector target;
