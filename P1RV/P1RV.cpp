@@ -4,17 +4,20 @@
 #include "Camera.h"
 #include "Object.h"
 #include "Input.h"
+#include "Texture.h"
 
 Camera camera(65, 0.1, 100, {0, 0, 0.3});
 
-Object player("Link/AdultLink.obj", 0.05);
+Object player("Models/Link/AdultLink.obj", 0.05);
 
-Object plane(
-{{
-   {-5, 0, -5},
-   {-5, 0, 5},
-   {5, 0, 5},
-   {5, 0, -5}
+Texture tex("Models/Link/Original Textures/eye.png");
+
+Object plane
+({{
+    {{-5, 0, -5}},
+    {{-5, 0, 5}},
+    {{5, 0, 5}},
+    {{5, 0, -5}}
 },{
     {0, 1, 2, 3}
 }});

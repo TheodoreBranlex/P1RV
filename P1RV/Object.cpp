@@ -5,7 +5,15 @@
 #include "Object.h"
 
 
-Mesh::Mesh(vector<Vector> vertexList, vector<vector<unsigned int>> faceList)
+Vertex::Vertex(Vector vertexPosition, Vector textureCoordinate, Vector vertexNormal)
+{
+    position = vertexPosition;
+    texcoord = textureCoordinate;
+    normal = vertexNormal;
+}
+
+
+Mesh::Mesh(vector<Vertex> vertexList, vector<vector<unsigned int>> faceList)
 {
     vertices = vertexList;
     faces = faceList;
@@ -17,19 +25,25 @@ void Mesh::Render()
     {
         glBegin(GL_POLYGON);
         for (unsigned int i : face)
-            glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
+        {
+            glTexCoord2d(vertices[i].texcoord.x, vertices[i].texcoord.y);
+            glNormal3d(vertices[i].normal.x, vertices[i].normal.y, vertices[i].normal.z);
+            glVertex3d(vertices[i].position.x, vertices[i].position.y, vertices[i].position.z);
+        }
         glEnd();
     }
 }
 
 Mesh readMesh(aiMesh* mesh, const aiScene* scene)
 {
-    vector<Vector> vertices;
+    vector<Vertex> vertices;
     vector<vector<unsigned int>> faces;
     for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
     {
-        Vector vertex(mesh->mVertices[i].x, mesh->mVertices[i].y, -mesh->mVertices[i].z);
-        vertices.push_back(vertex);
+        Vector position(mesh->mVertices[i].x, mesh->mVertices[i].y, -mesh->mVertices[i].z);
+        Vector texcoord(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
+        Vector normal(mesh->mNormals[i].x, mesh->mNormals[i].y, -mesh->mNormals[i].z);
+        vertices.push_back(Vertex(position, texcoord, normal));
     }
     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
     {
@@ -44,17 +58,16 @@ Mesh readMesh(aiMesh* mesh, const aiScene* scene)
 
 Object::Object(Mesh mesh) : scale(1), position(), direction(0, 0, -1), up(0, 1, 0)
 {
-    this->push_back(mesh);
+    meshes.push_back(mesh);
     Object::all.push_back(this);
 }
 
-Object::Object(string filename, double modelScale) : scale(modelScale), position(), direction(0, 0, -1), up(0, 1, 0)
+Object::Object(string path, double modelScale) : scale(modelScale), position(), direction(0, 0, -1), up(0, 1, 0)
 {
-    string path = "Models/" + filename;
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    const aiScene* scene = importer.ReadFile(path, aiProcess_FlipUVs);
     for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
-        this->push_back(readMesh(scene->mMeshes[i], scene));
+        meshes.push_back(readMesh(scene->mMeshes[i], scene));
     Object::all.push_back(this);
 }
 
@@ -66,7 +79,7 @@ void Object::Render()
     glTranslated(position.x, position.y, position.z);
     gluLookAt(0, 0, 0, -direction.x, direction.y, direction.z, up.x, up.y, up.z);
     glScaled(scale, scale, scale);
-    for (Mesh mesh : *this)
+    for (Mesh mesh : meshes)
         mesh.Render();
     glPopMatrix();
 }
