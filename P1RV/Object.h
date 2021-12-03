@@ -15,18 +15,17 @@ struct Mesh
 	void Render();
 };
 
-struct Object
+struct Object : vector<Mesh>
 {
 	inline static vector<Object*> all;
 
-	vector<Mesh> meshes;
-
+	double scale;
 	Vector position;
 	Vector direction;
 	Vector up;
 	
-	Object(vector<Mesh>);
-	Object(string filename);
+	Object(Mesh);
+	Object(string, double = 1);
 
 	void Render();
 };

@@ -7,18 +7,17 @@
 
 Camera camera(65, 0.1, 100, {0, 0, 0.3});
 
-Object player("Eevee/model.obj");
+Object player("Link/AdultLink.obj", 0.05);
 
-Object plane({
-    Mesh({
-    {-5, 0, -5},
-    {-5, 0, 5},
-    {5, 0, 5},
-    {5, 0, -5}
+Object plane(
+{{
+   {-5, 0, -5},
+   {-5, 0, 5},
+   {5, 0, 5},
+   {5, 0, -5}
 },{
     {0, 1, 2, 3}
-    })
-});
+}});
 
 Vector target;
 
@@ -43,6 +42,7 @@ void Initialize()
 
 
 Vector speed(0, 0, runSpeed);
+bool grounded;
 bool targetLock = false;
 
 void Update(int ms)
@@ -56,15 +56,19 @@ void Update(int ms)
 
     Vector move = Input::move.x * right + Input::move.z * forward;
 
-    if (player.position.y > 1)
+    if (player.position.y > 0.1)
+    {
         speed.y -= gravity * dt;
+        grounded = false;
+    }
     else
     {
-        player.position.y = 1;
+        player.position.y = 0.1;
         speed.y = 0;
+        grounded = true;
     }
 
-    if (Input::roll)
+    if (Input::roll && grounded)
         if (targetLock && Input::move.z < -jumpThreshold)
             speed = backFlip;
         else if (targetLock && abs(Input::move.x) > jumpThreshold)
@@ -93,7 +97,8 @@ void Update(int ms)
     {
         Vector targetDirection = (target - player.position).Normalize();
         camera.direction.Damp(targetDirection, targetSpeed, dt);
-        player.direction = (targetDirection).Normalize();
+        targetDirection.y = 0;
+        player.direction = targetDirection;
     }
     camera.direction.Normalize();
     camera.position = player.position - cameraDistance * camera.direction;

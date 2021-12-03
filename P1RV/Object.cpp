@@ -2,7 +2,6 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-
 #include "Object.h"
 
 
@@ -28,7 +27,10 @@ Mesh readMesh(aiMesh* mesh, const aiScene* scene)
     vector<Vector> vertices;
     vector<vector<unsigned int>> faces;
     for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
-        vertices.push_back(Vector(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
+    {
+        Vector vertex(mesh->mVertices[i].x, mesh->mVertices[i].y, -mesh->mVertices[i].z);
+        vertices.push_back(vertex);
+    }
     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
     {
         vector<unsigned int> face;
@@ -40,21 +42,19 @@ Mesh readMesh(aiMesh* mesh, const aiScene* scene)
 }
 
 
-Object::Object(vector<Mesh> meshList) : meshes(meshList)
+Object::Object(Mesh mesh) : scale(1), position(), direction(0, 0, -1), up(0, 1, 0)
 {
+    this->push_back(mesh);
     Object::all.push_back(this);
-    position = Vector();
-    direction = Vector(0, 0, -1);
-    up = Vector(0, 1, 0);
 }
 
-Object::Object(string filename) : position(), direction(0, 0, -1), up(0, 1, 0)
+Object::Object(string filename, double modelScale) : scale(modelScale), position(), direction(0, 0, -1), up(0, 1, 0)
 {
     string path = "Models/" + filename;
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
     for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
-        meshes.push_back(readMesh(scene->mMeshes[i], scene));
+        this->push_back(readMesh(scene->mMeshes[i], scene));
     Object::all.push_back(this);
 }
 
@@ -65,7 +65,8 @@ void Object::Render()
     glPushMatrix();
     glTranslated(position.x, position.y, position.z);
     gluLookAt(0, 0, 0, -direction.x, direction.y, direction.z, up.x, up.y, up.z);
-    for (Mesh mesh : meshes)
+    glScaled(scale, scale, scale);
+    for (Mesh mesh : *this)
         mesh.Render();
     glPopMatrix();
 }
