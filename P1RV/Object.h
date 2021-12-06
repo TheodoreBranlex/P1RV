@@ -9,9 +9,8 @@ struct Vertex
 {
 	Vector position;
 	Vector texcoord;
-	Vector normal;
 
-	Vertex(Vector, Vector = Vector(), Vector = Vector());
+	Vertex(Vector, Vector = Vector());
 };
 
 struct Mesh

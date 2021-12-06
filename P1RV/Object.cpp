@@ -1,15 +1,14 @@
-#include <gl/glut.h>
+#include <glut.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include "Object.h"
 
 
-Vertex::Vertex(Vector vertexPosition, Vector textureCoordinate, Vector vertexNormal)
+Vertex::Vertex(Vector vertexPosition, Vector textureCoordinate)
 {
     position = vertexPosition;
     texcoord = textureCoordinate;
-    normal = vertexNormal;
 }
 
 
@@ -27,7 +26,6 @@ void Mesh::Render()
         for (unsigned int i : face)
         {
             glTexCoord2d(vertices[i].texcoord.x, vertices[i].texcoord.y);
-            glNormal3d(vertices[i].normal.x, vertices[i].normal.y, vertices[i].normal.z);
             glVertex3d(vertices[i].position.x, vertices[i].position.y, vertices[i].position.z);
         }
         glEnd();
@@ -42,8 +40,7 @@ Mesh readMesh(aiMesh* mesh, const aiScene* scene)
     {
         Vector position(mesh->mVertices[i].x, mesh->mVertices[i].y, -mesh->mVertices[i].z);
         Vector texcoord(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
-        Vector normal(mesh->mNormals[i].x, mesh->mNormals[i].y, -mesh->mNormals[i].z);
-        vertices.push_back(Vertex(position, texcoord, normal));
+        vertices.push_back(Vertex(position, texcoord));
     }
     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
     {
