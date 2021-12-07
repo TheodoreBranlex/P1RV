@@ -2,6 +2,7 @@
 #include "Display.h"
 #include "Camera.h"
 #include "Object.h"
+#include "Texture.h"
 
 
 void Display::CreateWindow(const char* title, int width, int height, int xPosition, int yPosition)
@@ -33,6 +34,8 @@ void Display::BeginDisplay(void (*InitializeScene) (), void (*UpdateScene) (int)
 void Display::RenderScene()
 {
     Camera::main->Setup();
+    Texture tex("Models/Link/Original Textures/eye.png");
+    tex.Use();
     for (auto object : Object::all)
         object->Render();
     glFlush();

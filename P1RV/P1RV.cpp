@@ -10,8 +10,6 @@ Camera camera(65, 0.1, 100, {0, 0, 0.3});
 
 Object player("Models/Link/AdultLink.obj", 0.05);
 
-Texture tex("Models/Link/Original Textures/eye.png");
-
 Object plane
 ({{
     {{-5, 0, -5}},

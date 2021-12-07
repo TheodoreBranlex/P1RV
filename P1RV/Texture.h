@@ -7,5 +7,7 @@ struct Texture
 	unsigned char* data;
 
 	Texture(const char*);
+
+	void Use();
 };
 
