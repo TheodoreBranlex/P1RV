@@ -1,13 +1,16 @@
 #pragma once
+#include <string>
+
+using namespace std;
 
 struct Texture
 {
-	int width, height;
-	int channels;
-	unsigned char* data;
+	unsigned int id;
+	string path;
 
-	Texture(const char*);
+	Texture(string = "");
 
-	void Use();
+	void Load();
+	void Apply();
 };
 

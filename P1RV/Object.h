@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include "Vector.h"
+#include "Texture.h"
 
 using namespace std;
 
@@ -17,8 +18,9 @@ struct Mesh
 {
 	vector<Vertex> vertices;
 	vector<vector<unsigned int>> faces;
+	Texture texture;
 
-	Mesh(vector<Vertex>, vector<vector<unsigned int>>);
+	Mesh(vector<Vertex>, vector<vector<unsigned int>>, Texture = Texture());
 
 	void Render();
 };

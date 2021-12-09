@@ -13,30 +13,32 @@ void Display::CreateWindow(const char* title, int width, int height, int xPositi
     glutCreateWindow(title);
 }
 
-void Display::BeginDisplay(void (*UpdateScene) (int))
+
+void LoadTextures(int i)
 {
-    BeginDisplay([]() {}, UpdateScene);
+    for (auto object : Object::all)
+        for (auto& mesh : object->meshes)
+            mesh.texture.Load();
 }
 
-void Display::BeginDisplay(void (*InitializeScene) (), void (*UpdateScene) (int))
+void RenderScene()
 {
-    glutDisplayFunc(RenderScene);
+    Camera::main->Setup();
+    for (auto object : Object::all)
+        object->Render();
+    glFlush();
+}
+
+
+void Display::BeginDisplay(void (*UpdateScene) (int))
+{
     glutReshapeFunc([](int width, int height) { glViewport(0, 0, width, height); });
 
-    InitializeScene();
+    glutTimerFunc(0, LoadTextures, 0);
+    glutDisplayFunc(RenderScene);
 
     int ms = 1000 / Display::fps;
     glutTimerFunc(ms, UpdateScene, ms);
 
     glutMainLoop();
-}
-
-void Display::RenderScene()
-{
-    Camera::main->Setup();
-    Texture tex("Models/Link/Original Textures/eye.png");
-    tex.Use();
-    for (auto object : Object::all)
-        object->Render();
-    glFlush();
 }

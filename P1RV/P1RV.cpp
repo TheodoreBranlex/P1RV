@@ -8,7 +8,7 @@
 
 Camera camera(65, 0.1, 100, {0, 0, 0.3});
 
-Object player("Models/Link/AdultLink.obj", 0.05);
+Object player("Models/Link/AdultLink.dae", 0.05);
 
 Object plane
 ({{
@@ -22,7 +22,6 @@ Object plane
 
 Vector target;
 
-
 double cameraDistance = 10;
 double targetSpeed = 20;
 
@@ -34,13 +33,6 @@ double deceleration = 30;
 double jumpThreshold = 0.7;
 Vector sideHop(0, 25, 40);
 Vector backFlip(0, 40, 30);
-
-
-void Initialize()
-{
-    player.position = Vector(0, 10, 0);
-}
-
 
 Vector speed(0, 0, runSpeed);
 bool grounded;
@@ -117,5 +109,5 @@ int main(int argc, char* argv[])
     glutInit(&argc, argv);
     Display::CreateWindow("P1RV", 800, 800);
     Input::BeginInput();
-    Display::BeginDisplay(Initialize, Update);
+    Display::BeginDisplay(Update);
 }
