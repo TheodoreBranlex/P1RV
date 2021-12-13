@@ -31,10 +31,10 @@ double rollSpeed = 30;
 double deceleration = 30;
 
 double jumpThreshold = 0.7;
-Vector sideHop(0, 25, 40);
-Vector backFlip(0, 40, 30);
+Vector sideHop(40, 25);
+Vector backFlip(30, 40);
 
-Vector speed(0, 0, runSpeed);
+Vector speed(runSpeed, 0);
 bool grounded;
 bool targetLock = false;
 
@@ -67,12 +67,12 @@ void Update(int ms)
         else if (targetLock && abs(Input::move.x) > jumpThreshold)
             speed = sideHop;
         else
-            speed.z = rollSpeed;
+            speed.x = rollSpeed;
 
-    if (speed.z > runSpeed)
-        speed.z -= deceleration * dt;
+    if (speed.x > runSpeed)
+        speed.x -= deceleration * dt;
 
-    Vector velocity = speed.y * up + speed.z * move;
+    Vector velocity = speed.x * move + speed.y * up;
 
     player.position += velocity * dt;
     
