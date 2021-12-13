@@ -24,7 +24,7 @@ Mesh::Mesh(vector<Vertex> vertexList, vector<vector<unsigned int>> faceList, Tex
 
 void Mesh::Render()
 {
-    texture.Apply();
+    texture.Use();
     for (vector<unsigned int> face : faces)
     {
         glBegin(GL_POLYGON);

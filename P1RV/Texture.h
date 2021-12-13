@@ -11,6 +11,6 @@ struct Texture
 	Texture(string = "");
 
 	void Load();
-	void Apply();
+	void Use();
 };
 
