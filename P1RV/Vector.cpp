@@ -9,6 +9,16 @@ Vector::Vector(double X, double Y, double Z) : x(X), y(Y), z(Z) {}
 Vector::Vector(const Vector& v) : Vector(v.x, v.y, v.z) {}
 
 
+bool Vector::operator==(const Vector& v) const
+{
+    return (x == v.x && y == v.y && z == v.z);
+}
+
+bool Vector::operator!=(const Vector& v) const
+{
+    return (x != v.x || y != v.y || z != v.z);
+}
+
 Vector& Vector::operator=(const Vector& v)
 {
     x = v.x;
@@ -114,10 +124,12 @@ double Vector::Length() const
     return sqrt(Dot(*this));
 }
 
-Vector& Vector::Normalize()
+Vector& Vector::Normalize(Vector zero)
 {
-    if (Length() != 0)
+    if (*this != Vector())
         *this /= Length();
+    else
+        *this = zero;
     return *this;
 }
 
@@ -125,5 +137,11 @@ Vector& Vector::Damp(const Vector& v, double l, double dt)
 {
     double s = exp(-l * dt);
     *this = s * (*this) + (1 - s) * v;
+    return *this;
+}
+
+Vector& Vector::Flat()
+{
+    this->y = 0;
     return *this;
 }

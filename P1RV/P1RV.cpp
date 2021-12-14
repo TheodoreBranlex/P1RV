@@ -36,7 +36,7 @@ Vector backFlip(30, 40);
 
 Vector speed(runSpeed, 0);
 bool grounded;
-bool targetLock = false;
+bool targetLock = true;
 
 void Update(int ms)
 {
@@ -88,13 +88,13 @@ void Update(int ms)
     }
     else
     {
-        Vector targetDirection = (target - player.position).Normalize();
-        camera.direction.Damp(targetDirection, targetSpeed, dt);
-        targetDirection.y = 0;
+        Vector targetDirection = (target - player.position).Flat().Normalize(forward);
         player.direction = targetDirection;
+        targetDirection.y = camera.direction.y;
+        camera.direction.Damp(targetDirection, targetSpeed, dt);
+        camera.direction += Input::camera.y * up;
     }
-    camera.direction.Normalize();
-    camera.position = player.position - cameraDistance * camera.direction;
+    camera.position = player.position - cameraDistance * Vector(camera.direction).Normalize();
     
 
     glutPostRedisplay();
