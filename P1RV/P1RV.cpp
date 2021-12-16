@@ -36,7 +36,7 @@ Vector backFlip(30, 40);
 
 Vector speed(runSpeed, 0);
 bool grounded;
-bool targetLock = true;
+bool targetLock = false;
 
 void Update(int ms)
 {

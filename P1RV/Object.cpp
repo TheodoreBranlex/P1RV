@@ -91,7 +91,7 @@ void Object::Render()
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glTranslated(position.x, position.y, position.z);
-    gluLookAt(0, 0, 0, -direction.x, direction.y, direction.z, up.x, up.y, up.z);
+    gluLookAt(0, 0, 0, -direction.x, -direction.y, direction.z, -up.x, up.y, up.z);
     glScaled(scale, scale, scale);
     for (Mesh mesh : meshes)
         mesh.Render();
