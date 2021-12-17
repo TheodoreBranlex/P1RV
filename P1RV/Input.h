@@ -16,7 +16,7 @@ namespace Input
 	inline Button roll;
 	inline Button target;
 
-	inline double mouseSensitivity = 0.1;
+	inline double mouseSensitivity = 0.2;
 
 	void BeginInput();
 };

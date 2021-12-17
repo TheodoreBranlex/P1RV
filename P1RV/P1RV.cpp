@@ -49,7 +49,7 @@ void Update(int ms)
     Vector right = (camera.direction * up).Normalize();
     Vector forward = (up * right).Normalize();
 
-    Vector move = Input::move.x * right + Input::move.z * forward;
+    Vector move = Vector(Input::move).Normalize().x * right + Vector(Input::move).Normalize().y * forward;
 
     if (player.position.y > 0.1)
     {
@@ -64,7 +64,7 @@ void Update(int ms)
     }
 
     if (Input::roll && grounded)
-        if (targetLock && Input::move.z < -jumpThreshold)
+        if (targetLock && Input::move.y < -jumpThreshold)
             speed = backFlip;
         else if (targetLock && abs(Input::move.x) > jumpThreshold)
             speed = sideHop;

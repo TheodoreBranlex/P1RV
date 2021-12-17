@@ -5,22 +5,19 @@
 using namespace Input;
 
 
-struct { bool left, right, up, down; } keypad;
-
 void KeyDown(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
 	case 'q':
-		keypad.left = true; break;
+		move.x -= 1; break;
 	case 'd':
-		keypad.right = true; break;
+		move.x += 1; break;
 	case 'z':
-		keypad.up = true; break;
+		move.y += 1; break;
 	case 's':
-		keypad.down = true; break;
+		move.y -= 1; break;
 	}
-	move = Vector(keypad.right - keypad.left, 0, keypad.up - keypad.down).Normalize();
 }
 
 void KeyUp(unsigned char key, int x, int y)
@@ -28,15 +25,14 @@ void KeyUp(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'q':
-		keypad.left = false; break;
+		move.x += 1; break;
 	case 'd':
-		keypad.right = false; break;
+		move.x -= 1; break;
 	case 'z':
-		keypad.up = false; break;
+		move.y -= 1; break;
 	case 's':
-		keypad.down = false; break;
+		move.y += 1; break;
 	}
-	move = Vector(keypad.right - keypad.left, 0, keypad.up - keypad.down).Normalize();
 }
 
 
@@ -70,11 +66,12 @@ void MouseMove(int dx, int dy)
 
 void Input::BeginInput()
 {
+	glutSetCursor(GLUT_CURSOR_NONE);
+	glutIgnoreKeyRepeat(true);
+
 	glutKeyboardFunc(KeyDown);
 	glutKeyboardUpFunc(KeyUp);
 	glutMouseFunc(MousePress);
 	glutMotionFunc(MouseMove);
 	glutPassiveMotionFunc(MouseMove);
-
-	glutSetCursor(GLUT_CURSOR_NONE);
 }
