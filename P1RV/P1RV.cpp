@@ -40,6 +40,8 @@ bool targetLock = false;
 
 void Update(int ms)
 {
+    ms = 1000 / Display::fps;
+    glutTimerFunc(ms, Update, ms);
     double dt = (double) ms / 1000;
 
     
@@ -98,9 +100,6 @@ void Update(int ms)
     
 
     glutPostRedisplay();
-
-    ms = 1000 / Display::fps;
-    glutTimerFunc(ms, Update, ms);
 }
 
 
