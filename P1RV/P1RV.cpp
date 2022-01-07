@@ -8,17 +8,9 @@
 
 Camera camera(65, 0.1, 100, {0, 0, 0.3});
 
-Object player("Models/Link/AdultLink.dae", 0.05);
+Object field("Models/Field/hyrulefeild.obj", 1);
 
-Object plane
-({{
-    {{-5, 0, -5}},
-    {{-5, 0, 5}},
-    {{5, 0, 5}},
-    {{5, 0, -5}}
-},{
-    {0, 1, 2, 3}
-}});
+Object player("Models/Link/AdultLink.dae", 0.05);
 
 Vector target;
 
@@ -31,7 +23,7 @@ double rollSpeed = 30;
 double deceleration = 30;
 
 double jumpThreshold = 0.7;
-Vector sideHop(40, 25);
+Vector sideHop(35, 25);
 Vector backFlip(30, 40);
 
 Vector speed(runSpeed, 0);
