@@ -23,5 +23,6 @@ void Texture::Load()
 
 void Texture::Use()
 {
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, id);
 }

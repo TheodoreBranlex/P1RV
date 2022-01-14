@@ -14,7 +14,7 @@ void Display::CreateWindow(const char* title, int width, int height, int xPositi
 }
 
 
-void LoadTextures(int i)
+void LoadTextures()
 {
     for (auto object : Object::all)
         for (auto& mesh : object->meshes)
@@ -34,11 +34,12 @@ void Display::BeginDisplay(void (*UpdateScene) (int))
 {
     glutReshapeFunc([](int width, int height) { glViewport(0, 0, width, height); });
 
-    glutTimerFunc(0, LoadTextures, 0);
     glutDisplayFunc(RenderScene);
 
     int ms = 1000 / Display::fps;
     glutTimerFunc(ms, UpdateScene, ms);
+
+    LoadTextures();
 
     glutMainLoop();
 }
